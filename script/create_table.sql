@@ -29,7 +29,7 @@ create table test(
     berth_type char(4),
     berth_area float,
     berth_price int,
-    note char(50),
+    note char(100),
     trade_id char(19)
 );
 
