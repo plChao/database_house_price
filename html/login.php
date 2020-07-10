@@ -64,7 +64,7 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
          <br>
          <div class="alert alert-danger alert-dismissable">
              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-             Email e/ou password errados! 
+             Wrong Email or password ! 
          </div>
         <?php } ?> 
 
