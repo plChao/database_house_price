@@ -1,3 +1,42 @@
+<?php 
+include("config.php");
+
+//regiter
+if (isset($_POST['register']) && !empty($_POST['userid']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+
+    $email=$mysql->real_escape_string($_POST['email']);
+    $password=$mysql->real_escape_string($_POST['password']);
+    $userid=$mysql->real_escape_string($_POST['userid']);
+  
+    $sql = "insert into utilizador(userid,email,password) values ('$userid','$email','$password')";
+    $mysql->query($sql);  
+    $_SESSION['userid']=$userid;
+
+    header("location: ./index.php");
+    exit;
+}
+//login
+if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+
+    $email=$mysql->real_escape_string($_POST['email']);
+    $password=$mysql->real_escape_string($_POST['password']);
+
+    $login=$mysql->query("SELECT * FROM utilizador WHERE email='$email' AND password='$password'"); 
+
+    if($login->num_rows==1){
+        //session_register("userid");
+        $row = $login->fetch_assoc();
+        $_SESSION['userid']=$row['userid'];
+        //$_SESSION['userid']=$_POST['email'];
+        header("location: ./index.php");
+        exit;
+     }
+     else{
+         $error=1;
+     }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -16,13 +55,13 @@
     <div class="container">
 
         <div class="row">
-        <!-- <?php if($error==1){ ?> -->
-        <!-- <br> -->
-        <!-- <div class="alert alert-danger alert-dismissable"> -->
-            <!-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> -->
-            <!-- Email e/ou password errados! -->
-        <!-- </div> -->
-        <!-- <?php } ?> -->
+         <?php if($error==1){ ?>
+         <br>
+         <div class="alert alert-danger alert-dismissable">
+             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+             Email e/ou password errados! 
+         </div>
+        <?php } ?> 
 
         </div>
         <div class="row">
@@ -58,6 +97,9 @@
                         <!-- may need to change -->
                         <form role="form" method="post" action="./login.php">
                             <fieldset>
+                                <div class="form-group">
+                                    <input name="userid" class="form-control" placeholder="UserId" name="userid" type="userid" autofocus>
+                                </div>
                                 <div class="form-group">
                                     <input name="email" class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
                                 </div>
