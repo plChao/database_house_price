@@ -2,8 +2,8 @@
 //header('Content-Type: application/json;charset=utf-8'); //return json string
 
 include("config.php");
-$lvnum = $mysql->real_escape_string("Taipei");
-//$lvnum = $mysql->real_escape_string($_GET['lv']);
+//$lvnum = $mysql->real_escape_string("Taipei");
+$lvnum = $mysql->real_escape_string($_GET['lv']);
 //$lvnum = $_GET['lv'];
 //echo $lvnum;
 //$lvnum = "5.5";
