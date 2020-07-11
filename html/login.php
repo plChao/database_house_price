@@ -7,13 +7,21 @@ if (isset($_POST['register']) && !empty($_POST['userid']) && !empty($_POST['emai
     $email=$mysql->real_escape_string($_POST['email']);
     $password=$mysql->real_escape_string($_POST['password']);
     $userid=$mysql->real_escape_string($_POST['userid']);
-  
-    $sql = "insert into utilizador(userid,email,password) values ('$userid','$email','$password')";
-    $mysql->query($sql);  
-    $_SESSION['userid']=$userid;
+    
+    //test whether userid has been register
+    $sql = "SELECT userid FROM utilizador WHERE userid='$userid'";
+    $test = $mysql->query($sql);
+    if($test->num_rows == 0){ 
+        $sql = "insert into utilizador(userid,email,password) values ('$userid','$email','$password')";
+        $mysql->query($sql);  
+        $_SESSION['userid']=$userid;
 
-    header("location: ./index.php");
-    exit;
+        header("location: ./index.php");
+        exit;
+    }
+    else{
+        $repeat = 1;
+    }
 }
 //login
 if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password'])) {
@@ -59,7 +67,15 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
          <br>
          <div class="alert alert-danger alert-dismissable">
              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-             Email e/ou password errados! 
+             Email and/or password error! 
+         </div>
+        <?php } ?>
+
+        <?php if($repeat==1){ ?>
+         <br>
+         <div class="alert alert-danger alert-dismissable">
+             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+             userid has been registered 
          </div>
         <?php } ?> 
 
