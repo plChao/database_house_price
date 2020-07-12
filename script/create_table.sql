@@ -1,6 +1,6 @@
 drop database house_project;
 create database house_project;
-ALTER DATABASE house_project CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER DATABASE house_project CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 use house_project;
 create table test(
     district char(4),
@@ -34,7 +34,7 @@ create table test(
 );
 
 
-load data local infile '../data/107_1/A_lvr_land_A.csv'
+load data local infile '../data/original/107_1/A_lvr_land_A.csv'
 into table test
 fields terminated by ','
 enclosed by '"'
