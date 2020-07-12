@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	$.ajax({
-		url: "http://localhost/graph/data.php",
+		url: "http://localhost/graph/bar_data.php",
 		method: "GET",
 		success: function(data) {
 			var datajson = JSON.parse(data);
@@ -31,7 +31,7 @@ $(document).ready(function(){
 				]
 			};
 
-			var ctx = $("#mycanvas");
+			var ctx = $("#barcanvas");
 
 			var barGraph = new Chart(ctx, {
 				type: 'bar',

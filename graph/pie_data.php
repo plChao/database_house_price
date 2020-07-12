@@ -18,7 +18,7 @@ $db_user="root";
 //print "\nset db_user";
 $db_pass="";
 //print "\nset db_pass";
-$db_name="db_name";
+$db_name="house_project";
 //print "\nset db_name";
 $mysqli = new mysqli($db_host, $db_user, $db_pass, $db_name);
 //print "\nall done create mysqli";

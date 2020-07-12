@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	$.ajax({
-		url : "http://localhost/graph/data2.php",
+		url : "http://localhost/graph/line_data.php",
 		type : "GET",
 		success : function(data){
 			var datajson = JSON.parse(data);
@@ -27,10 +27,30 @@ $(document).ready(function(){
 						pointHoverBorderColor: "rgba(59, 89, 152, 1)",
 						data: price
 					},
+					/*{
+						label: "twitter",
+						fill: false,
+						lineTension: 0.1,
+						backgroundColor: "rgba(29, 202, 255, 0.75)",
+						borderColor: "rgba(29, 202, 255, 1)",
+						pointHoverBackgroundColor: "rgba(29, 202, 255, 1)",
+						pointHoverBorderColor: "rgba(29, 202, 255, 1)",
+						data: twitter_follower
+					},
+					{
+						label: "googleplus",
+						fill: false,
+						lineTension: 0.1,
+						backgroundColor: "rgba(211, 72, 54, 0.75)",
+						borderColor: "rgba(211, 72, 54, 1)",
+						pointHoverBackgroundColor: "rgba(211, 72, 54, 1)",
+						pointHoverBorderColor: "rgba(211, 72, 54, 1)",
+						data: googleplus_follower
+					}*/
 				]
 			};
 
-			var ctx = $("#mycanvas");
+			var ctx = $("#linecanvas");
 
 			var LineGraph = new Chart(ctx, {
 				type: 'line',
