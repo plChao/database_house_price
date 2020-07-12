@@ -3,6 +3,7 @@ create database hp_method_1;
 ALTER DATABASE hp_method_1 CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 use hp_method_1;
 create table trade(
+    city char(4),
     district char(6),
     trade_target char(12),
     address char(55),
@@ -40,3 +41,16 @@ fields terminated by ','
 enclosed by '"'
 lines terminated by '\n'
 ignore 1 lines;
+
+-- store the sql below to forselect table
+-- SELECT distinct city, distinct
+-- from trade;
+
+CREATE TABLE IF NOT EXISTS forselect ( 
+city VARCHAR(255) NOT NULL,
+region VARCHAR(255) NOT NULL,
+PRIMARY KEY (city, region)
+);
+INSERT INTO forselect
+SELECT distinct city, distinct
+from trade;
