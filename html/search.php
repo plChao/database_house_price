@@ -25,7 +25,7 @@
 <body>
     <h2></h2>
     <div class="container">
-        
+
     </div>
     <div>
         <div>
@@ -41,8 +41,8 @@
                     include("config.php");
                     $query = "SELECT distinct city FROM forselect;";
                     $result = $mysql->query($query);
-                
-                    //echo '<option value="taipei">taipei</option>"\n"';       
+
+                    //echo '<option value="taipei">taipei</option>"\n"';
                     while ($row = $result->fetch_assoc() ) {
                         echo '<option value="' . $row["city"] . '">' . $row["city"] . '</option>' . "\n";
                         }
@@ -83,9 +83,26 @@
                     <option value="1,1,1">套房(1 房 1 廳 1 衛)</option>
                 </select>
             </p>
+            <input type="submit" value="submit">
+            </form>
         </div>
         <div id="DIV2">
             <p>query result 可以滑動的介面、顯示總共幾筆</p>
+            <?php
+            include("config.php");
+            $where_clause = "WHERE address LIKE \"".$_POST["city"].$_POST["distinct"]."%\" AND trade_date LIKE \"".$_POST["year"].$_POST["month"]."%\" AND state LIKE \"".$_POST["state"]."\"";
+            $query = "SELECT address, trade_date, price FROM trade ".$where_clause." LIMIT 10;";
+            $result = $mysql->query($query);
+            if ($result->num_rows > 0) {
+              echo "<table><tr><th>Address</th><th>Trade date</th><th>Price</th></tr>";
+              while($row = $result->fetch_assoc()) {
+                echo "<tr><td>".$row["address"]."</td><td>".$row["trade_date"]."</td></tr>";
+              }
+              echo "</table>";
+            } else {
+              echo "0 results";
+            }
+            ?>
         </div>
         <div style="clear:both;"></div>
         <div>
@@ -132,7 +149,7 @@
                     //當第一層回到預設值時，第二層回到預設位置
 			console.log(result);
 			console.log(result.length);
-			console.log(typeof result);	
+			console.log(typeof result);
 		    if (result == "") {
                         $('#myFirstChildSelect').val($('option:first').val());
                     }
@@ -145,7 +162,7 @@
                         i++;
 		    }
 	           //alert('Successfully called');
-			
+
                 },
                 error: function(xhr, status, msg) {
                     console.error(xhr);
