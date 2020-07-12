@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	$.ajax({
-		url: "http://localhost/graph/data.php",
+		url: "http://localhost/graph/pie_data.php",
 		method: "GET",
 		success: function(data) {
 			var datajson = JSON.parse(data);
@@ -26,15 +26,18 @@ $(document).ready(function(){
 						borderColor: 'rgba(200, 200, 200, 0.75)',
 						hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
 						hoverBorderColor: 'rgba(200, 200, 200, 1)',
-						data: count
+						data: count//,
+						//backgroundColor: palette('tol-sq',).map(function(hex){
+							//return '#' + hex;
+						//})
 					}
 				]
 			};
 
-			var ctx = $("#mycanvas");
+			var ctx = $("#piecanvas");
 
 			var barGraph = new Chart(ctx, {
-				type: 'bar',
+				type: 'pie',
 				data: chartdata
 			});
 		},
