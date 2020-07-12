@@ -1,7 +1,16 @@
-drop database hp_method_1;
-create database hp_method_1;
-ALTER DATABASE hp_method_1 CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-use hp_method_1;
+drop database test_project;
+create database test_project;
+ALTER DATABASE test_project CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+use test_project;
+
+CREATE TABLE IF NOT EXISTS utilizador ( 
+userid VARCHAR(255) NOT NULL, 
+email VARCHAR(255) NOT NULL, 
+password VARCHAR(255) NOT NULL, 
+PRIMARY KEY (email), 
+UNIQUE INDEX email_UNIQUE (email) 
+);
+
 create table trade(
     city char(4),
     district char(6),
@@ -52,5 +61,5 @@ region VARCHAR(255) NOT NULL,
 PRIMARY KEY (city, region)
 );
 INSERT INTO forselect
-SELECT distinct city, distinct
+SELECT distinct city, district
 from trade;
