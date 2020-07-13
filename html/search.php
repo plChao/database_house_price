@@ -32,7 +32,7 @@
             <a href="http://127.0.0.1/index.php">回首頁</a>
         </div>
         <div id="DIV1">
-      <h3>Filiter</h3>
+            <h3>Filiter</h3>
             <form action="" method="post">
             <p>縣市(city)
                 <select id="myParentSelect" name="city">
