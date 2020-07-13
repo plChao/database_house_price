@@ -92,7 +92,7 @@
             <p>query result</p>
             <?php
             include("config.php");
-            $where_clause = "WHERE address LIKE \"".$_POST["city"].$_POST["distinct"]."%\" AND trade_date LIKE \"".$_POST["year"].$_POST["month"]."%\" AND price BETWEEN ".$_POST["price_lb"]." AND ".$_POST["price_ub"];
+            $where_clause = "WHERE address LIKE \"".$_POST["city"].$_POST["district"]."%\" AND trade_date LIKE \"".$_POST["year"].$_POST["month"]."%\" AND price BETWEEN ".$_POST["price_lb"]." AND ".$_POST["price_ub"];
             echo "where clause: ".$where_clause."<br>";
 
             $query_cnt = "SELECT COUNT(*) as cnt FROM trade ".$where_clause.";";
@@ -166,7 +166,7 @@
       console.log(result);
       console.log(typeof result[0]['region']);
                     while (i < result.length) {
-                        $("#myFirstChildSelect").append("<option value='" + i + "'>" + result[i]['region'] + "</option>");
+                        $("#myFirstChildSelect").append("<option value='" + result[i]['region'] + "'>" + result[i]['region'] + "</option>");
                         i++;
         }
              //alert('Successfully called');
