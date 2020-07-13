@@ -1,4 +1,4 @@
-<!-- session_start open exist session or create new session-->
+
 <?php
 
 session_start();
