@@ -60,6 +60,8 @@ for foldername in os.listdir("../original"):
 print(merge_df.shape)
 merge_df = merge_df.loc[[len(x) >= 6 for x in merge_df['交易年月日']]]
 merge_df.reset_index(drop=True, inplace=True)
+merge_df = merge_df[merge_df['鄉鎮市區'].notna()]
+merge_df.reset_index(drop=True, inplace=True)
 print(merge_df.shape)
 # merge_df['yearmonth'] = [ x[:-2] for x in new_merge_df['交易年月日']]
 
@@ -70,11 +72,11 @@ print(merge_df.shape)
 merge_df.to_csv('merge.csv', index=False, na_rep='NULL')
 
 
-# In[8]:
+# In[7]:
 
 
-merge_df['yearmonth'] = [ x[:-4] for x in merge_df['交易年月日']]
-merge_df['yearmonth'].value_counts()
+tmp_df = pd.DataFrame([ x[:-4] for x in merge_df['交易年月日']])
+tmp_df[0].value_counts()
 
 
 # In[ ]:

@@ -15,19 +15,19 @@ create table trade(
     city char(4),
     district char(6),
     trade_target char(12),
-    address char(55),
+    address char(71),
     land_area float,
     area_use char(3),
     nonmetro_d char(6),
     nonmetro_u char(8),
     trade_date int,
-    target_detail char(12),
-    trade_floor char(50),
-    total_floor char(4),
+    target_detail char(13),
+    trade_floor char(65),
+    total_floor char(7),
     state char(15),
     purpose char(7),
     materials char(12),
-    building_date int,
+    building_date char(9),
     building_area float,
     room int,
     hall int,
@@ -39,7 +39,7 @@ create table trade(
     berth_type char(4),
     berth_area float,
     berth_price int,
-    note char(160),
+    note varchar(340),
     trade_id char(20)
 );
 
@@ -65,6 +65,7 @@ SELECT distinct city, district
 from trade;
 
 -- for history
+
 CREATE TABLE IF NOT EXISTS history ( 
 userid VARCHAR(255) NOT NULL,
 city VARCHAR(4) NOT NULL,
