@@ -25,7 +25,6 @@ if(!isset($_SESSION['userid'])){ header("Location: ./login.php"); }
 			echo $_SESSION['userid'];
 			echo '<br>';
 				echo '<br> <a href="http://127.0.0.1/logout.php">logout</a>';
-
 		}
 		?>
 	</div>

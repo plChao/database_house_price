@@ -7,6 +7,7 @@ $(document).ready(function(){
 			console.log(data);
 			var district = [];
 			var count = [];
+
 			for(var i in datajson) {
 				district.push(datajson[i].district);
 				count.push(datajson[i].cnt);
