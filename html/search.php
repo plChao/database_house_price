@@ -53,7 +53,7 @@ if (isset($_POST['search'])) {
     </div>
     <div>
         <div>
-            <a href="http://127.0.0.1/index.php">回首頁</a>
+            <a href="http://127.0.0.1/test_project/index.php">回首頁</a>
         </div>
         <div id="DIV1">
             <h3>Filiter</h3>
