@@ -33,6 +33,7 @@
         </div>
         <div id="DIV1">
             <h3>Filiter</h4>
+            <form role="form" method="post" action="./search.php">
             <p>縣市(city)
                 <select id="myParentSelect" name="city">
                 <option value="">請選擇</option>
@@ -90,7 +91,7 @@
             <p>query result 可以滑動的介面、顯示總共幾筆</p>
             <?php
             include("config.php");
-            $where_clause = "WHERE address LIKE \"".$_POST["city"].$_POST["distinct"]."%\" AND trade_date LIKE \"".$_POST["year"].$_POST["month"]."%\" AND state LIKE \"".$_POST["state"]."\"";
+            $where_clause = "WHERE address LIKE \"".$_POST["city"].$_POST["distinct"]."%\" AND trade_date LIKE \"".$_POST["year"].$_POST["month"]."%\"";
             $query = "SELECT address, trade_date, price FROM trade ".$where_clause." LIMIT 10;";
             $result = $mysql->query($query);
             if ($result->num_rows > 0) {
