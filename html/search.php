@@ -32,7 +32,8 @@
             <a href="http://127.0.0.1/index.php">回首頁</a>
         </div>
         <div id="DIV1">
-            <h3>Filiter</h4>
+            <h3>Filiter</h3>
+            <form action="" method="post">
             <p>縣市(city)
                 <select id="myParentSelect" name="city">
                 <option value="">請選擇</option>
@@ -78,25 +79,32 @@
                 </select>
                 月
             </p>
-            <p>建物型態(state)
-                <select name="state">
-                    <option value="1,1,1">套房(1 房 1 廳 1 衛)</option>
-                </select>
+            <p>總價元(total price)
+                最低:
+                <input type="number" id="price_lb" name="price_lb" value="100" min="100" max="10000000000">
+                最高:
+                <input type="number" id="price_ub" name="price_ub" value="100000000" min="100" max="10000000000">
             </p>
             <input type="submit" value="submit">
             </form>
         </div>
         <div id="DIV2">
-            <p>query result 可以滑動的介面、顯示總共幾筆</p>
+            <p>query result</p>
             <?php
             include("config.php");
-            $where_clause = "WHERE address LIKE \"".$_POST["city"].$_POST["distinct"]."%\" AND trade_date LIKE \"".$_POST["year"].$_POST["month"]."%\" AND state LIKE \"".$_POST["state"]."\"";
+            $where_clause = "WHERE address LIKE \"".$_POST["city"].$_POST["distinct"]."%\" AND trade_date LIKE \"".$_POST["year"].$_POST["month"]."%\" AND price BETWEEN ".$_POST["price_lb"]." AND ".$_POST["price_ub"];
+            echo "where clause: ".$where_clause."<br>";
+
+            $query_cnt = "SELECT COUNT(*) as cnt FROM trade ".$where_clause.";";
+            $cnt = $mysql->query($query_cnt)->fetch_assoc();
+            echo "共 ".$cnt["cnt"]." 筆資料<br>";
+
             $query = "SELECT address, trade_date, price FROM trade ".$where_clause." LIMIT 10;";
             $result = $mysql->query($query);
             if ($result->num_rows > 0) {
               echo "<table><tr><th>Address</th><th>Trade date</th><th>Price</th></tr>";
               while($row = $result->fetch_assoc()) {
-                echo "<tr><td>".$row["address"]."</td><td>".$row["trade_date"]."</td></tr>";
+                  echo "<tr><td>".$row["address"]."</td><td>".$row["trade_date"]."</td><td>".$row["price"]."</td></tr>";
               }
               echo "</table>";
             } else {
@@ -147,27 +155,27 @@
                 datatype: "json",
                 success: function(result) {
                     //當第一層回到預設值時，第二層回到預設位置
-			console.log(result);
-			console.log(result.length);
-			console.log(typeof result);
-		    if (result == "") {
+      console.log(result);
+      console.log(result.length);
+      console.log(typeof result);
+        if (result == "") {
                         $('#myFirstChildSelect').val($('option:first').val());
                     }
-			//依據第一層回傳的值去改變第二層的內容
-			result = JSON.parse(result);
-			console.log(result);
-			console.log(typeof result[0]['region']);
+      //依據第一層回傳的值去改變第二層的內容
+      result = JSON.parse(result);
+      console.log(result);
+      console.log(typeof result[0]['region']);
                     while (i < result.length) {
                         $("#myFirstChildSelect").append("<option value='" + i + "'>" + result[i]['region'] + "</option>");
                         i++;
-		    }
-	           //alert('Successfully called');
+        }
+             //alert('Successfully called');
 
                 },
                 error: function(xhr, status, msg) {
                     console.error(xhr);
-			console.error(msg);
-			//alert('failed called');
+      console.error(msg);
+      //alert('failed called');
                 }
             });
         });
