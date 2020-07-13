@@ -5,21 +5,29 @@ if(!isset($_SESSION['userid'])){ header("Location: ./login.php"); }
 
 
 <!DOCTYPE html>
+<head>
+	<title>Hp-Home</title>
+	<style>
+        h2 {text-align: center;}
+        p {text-align: center;}
+        div {text-align: center;}
+	</style>
+</head>
 <body>
+	<h2>Homepage of DataBase house project</h2>
+	<div>
+		<?php
+		//session_start();
+		//$_SESSION['userid'] = 10;
+		//isset($_SESSION['userid']);
+		if(isset($_SESSION['userid'])){
+			echo 'Your name : ';
+			echo $_SESSION['userid'];
+			echo '<br>';
+				echo '<br> <a href="http://127.0.0.1/logout.php">logout</a>';
 
-<?php
-//session_start();
-//$_SESSION['userid'] = 10;
-//isset($_SESSION['userid']);
-if(isset($_SESSION['userid'])){
-	echo 'Your name : ';
-	echo $_SESSION['userid'];
-	echo '<br>';
-        echo '<br> <a href="http://127.0.0.1/test_project/logout.php">logout</a>';
-
-}
-?>
-<br>hello everyone this is homepage
-
+		}
+		?>
+	</div>
 </body>
 </html>

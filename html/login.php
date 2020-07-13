@@ -7,13 +7,21 @@ if (isset($_POST['register']) && !empty($_POST['userid']) && !empty($_POST['emai
     $email=$mysql->real_escape_string($_POST['email']);
     $password=$mysql->real_escape_string($_POST['password']);
     $userid=$mysql->real_escape_string($_POST['userid']);
-  
-    $sql = "insert into utilizador(userid,email,password) values ('$userid','$email','$password')";
-    $mysql->query($sql);  
-    $_SESSION['userid']=$userid;
+    
+    //test whether userid has been register
+    $sql = "SELECT userid FROM utilizador WHERE userid='$userid'";
+    $test = $mysql->query($sql);
+    if($test->num_rows == 0){ 
+        $sql = "insert into utilizador(userid,email,password) values ('$userid','$email','$password')";
+        $mysql->query($sql);  
+        $_SESSION['userid']=$userid;
 
-    header("location: ./index.php");
-    exit;
+        header("location: ./index.php");
+        exit;
+    }
+    else{
+        $repeat = 1;
+    }
 }
 //login
 if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password'])) {
@@ -38,7 +46,7 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 ?>
 
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -49,9 +57,14 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        h2 {text-align: center;}
+        p {text-align: center;}
+        div {text-align: center;}
+    </style>
 </head>
 <body>
-
+    <h2>DataBase House project</h2>
     <div class="container">
 
         <div class="row">
@@ -59,7 +72,15 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
          <br>
          <div class="alert alert-danger alert-dismissable">
              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-             Email e/ou password errados! 
+             Email and/or password error! 
+         </div>
+        <?php } ?>
+
+        <?php if($repeat==1){ ?>
+         <br>
+         <div class="alert alert-danger alert-dismissable">
+             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+             userid has been registered 
          </div>
         <?php } ?> 
 
