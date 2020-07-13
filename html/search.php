@@ -1,3 +1,27 @@
+<?php
+include("config.php");
+if (isset($_POST['search'])) {
+
+    $city=$mysql->real_escape_string($_POST['city']);
+    $district=$mysql->real_escape_string($_POST['district']);
+    $trade_date=$mysql->real_escape_string($_POST["year"].$_POST["month"]);
+    $trade_date=(int) $trade_date;
+    $highest_price=$mysql->real_escape_string($_POST["price_ub"]);
+    $highest_price=(int) $highest_price;
+    $lowest_price=$mysql->real_escape_string($_POST["price_lb"]);
+    $lowest_price=(int) $lowest_price;
+    $userid=$_SESSION['userid'];
+
+    //test whether userid has been register
+    $sql = "insert into history (userid, city, district, trade_date, highest_price, lowest_price) values ('$userid','$city','$district',$trade_date,$highest_price,$lowest_price)";
+    $mysql->query($sql);
+    unset($_SESSION['city']);
+    unset($_SESSION['district']);
+    unset($_SESSION['trade_date']);
+    unset($_SESSION['highest_price']);
+    unset($_SESSION['lowest_price']);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,8 +60,15 @@
             <form action="" method="post">
             <p>縣市(city)
                 <select id="myParentSelect" name="city">
-                <option value="">請選擇</option>
-                    <?php
+
+
+			<?php
+			if( isset($_SESSION['city']) ){
+                               $one = $_SESSION['city'];
+                               echo'<option value="' .$one.'">'.$one. '</option>';
+
+                        }else{ echo'<option value="">請選擇</option>';}
+
                     // 取得第一層option資料
                     include("config.php");
                     $query = "SELECT distinct city FROM forselect;";
@@ -52,19 +83,50 @@
             </p>
             <p>區域(district)
                 <select id="myFirstChildSelect" name="district">
-                    <option value="">請選擇</option>
-                </select>
+		<?php
+		if( isset($_SESSION['district']) ){
+                               $one = $_SESSION['district'];
+                               echo'<option value="' .$one.'">'.$one. '</option>';
+
+                        }
+               else{
+                echo'<option value="">請選擇</option>';}
+?>
+	</select>
             </p>
             <p>時間(trade_date)
-                <select name="year">
+		<select name="year">
+<?php
+                       if( isset($_SESSION['trade_date']) ){
+
+                                //echo 'value = "'.$_SESSION['trade_date'][3].$_SESSION['trade_date'][4].'"';
+                               $one = $_SESSION['trade_date'][0];
+			       $two = $_SESSION['trade_date'][1];
+			       $three = $_SESSION['trade_date'][2];
+                               echo'<option value="' .$one .$two . $three .'">'.$one.$two.$three. '</option>';
+
+                        }
+                   ?>
                     <option value="106">106</option>
                     <option value="107">107</option>
                     <option value="108">108</option>
                     <option value="109">109</option>
                 </select>
                 年
-                <select name="month">
-                    <option value="01">01</option>
+		<select name="month">
+
+		     <?php
+                       if( isset($_SESSION['trade_date']) ){
+
+                                //echo 'value = "'.$_SESSION['trade_date'][3].$_SESSION['trade_date'][4].'"';
+			       $one = $_SESSION['trade_date'][3];
+			       $two = $_SESSION['trade_date'][4];
+			       echo'<option value="' .$one .$two .'">'.$one.$two. '</option>';
+
+			}
+                   ?>
+
+		    <option value="01">01</option>
                     <option value="02">02</option>
                     <option value="03">03</option>
                     <option value="04">04</option>
@@ -81,18 +143,48 @@
             </p>
             <p>總價元(total price)
                 最低:
-                <input type="number" id="price_lb" name="price_lb" value="100" min="100" max="10000000000">
+		<input type="number" id="price_lb" name="price_lb" value=<?php
+		if( isset($_SESSION['lowest_price']) ){
+                               $one = $_SESSION['lowest_price'];
+                               echo'"'.$one.'"';
+
+                        }
+               else{
+                echo'"100"';}
+?> min="100" max="10000000000">
                 最高:
-                <input type="number" id="price_ub" name="price_ub" value="100000000" min="100" max="10000000000">
+                <input type="number" id="price_ub" name="price_ub" value=<?php
+                if( isset($_SESSION['highest_price']) ){
+                               $one = $_SESSION['highest_price'];
+                               echo'"'.$one.'"';
+
+                        }
+               else{
+                echo'"100000000"';}
+?>  min="100" max="10000000000">
             </p>
-            <input type="submit" value="submit">
+            <input type="submit" name="search" value="submit"/>
             </form>
         </div>
         <div id="DIV2">
             <p>query result</p>
             <?php
-            include("config.php");
-            $where_clause = "WHERE address LIKE \"".$_POST["city"].$_POST["district"]."%\" AND trade_date LIKE \"".$_POST["year"].$_POST["month"]."%\" AND price BETWEEN ".$_POST["price_lb"]." AND ".$_POST["price_ub"];
+	include("config.php");
+	    if (isset($_POST['search'])){
+            if($_POST["city"] == ""){
+                if($_POST["district"] == ""){
+                    $where_clause = "WHERE trade_date LIKE \"".$_POST["year"].$_POST["month"]."%\" AND price BETWEEN ".$_POST["price_lb"]." AND ".$_POST["price_ub"];
+                }
+                else{
+                    $where_clause = "WHERE district = \"".$_POST["district"]."\" AND trade_date LIKE \"".$_POST["year"].$_POST["month"]."%\" AND price BETWEEN ".$_POST["price_lb"]." AND ".$_POST["price_ub"];
+                }
+            }
+            else if($_POST["district"] == ""){
+                $where_clause = "WHERE city = \"".$_POST["city"]."\" AND trade_date LIKE \"".$_POST["year"].$_POST["month"]."%\" AND price BETWEEN ".$_POST["price_lb"]." AND ".$_POST["price_ub"];
+            }
+            else{
+                $where_clause = "WHERE city = \"".$_POST["city"]."\" AND district = \"".$_POST["district"]."\" AND trade_date LIKE \"".$_POST["year"].$_POST["month"]."%\" AND price BETWEEN ".$_POST["price_lb"]." AND ".$_POST["price_ub"];
+            }
             echo "where clause: ".$where_clause."<br>";
 
             $query_cnt = "SELECT COUNT(*) as cnt FROM trade ".$where_clause.";";
@@ -109,7 +201,8 @@
               echo "</table>";
             } else {
               echo "0 results";
-            }
+	    }
+	    }
             ?>
         </div>
         <div style="clear:both;"></div>
