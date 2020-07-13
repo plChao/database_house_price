@@ -237,32 +237,31 @@ if (isset($_POST['search'])) {
                 datatype: "json",
                 success: function(result) {
                     //當第一層回到預設值時，第二層回到預設位置
-      console.log(result);
-      console.log(result.length);
-      console.log(typeof result);
-        if (result == "") {
-                        $('#myFirstChildSelect').val($('option:first').val());
-                    }
-      //依據第一層回傳的值去改變第二層的內容
-      result = JSON.parse(result);
-      console.log(result);
-      console.log(typeof result[0]['region']);
-                    while (i < result.length) {
-                        $("#myFirstChildSelect").append("<option value='" + result[i]['region'] + "'>" + result[i]['region'] + "</option>");
-                        i++;
-        }
-             //alert('Successfully called');
+                    console.log(result);
+                    console.log(result.length);
+                    console.log(typeof result);
+                if (result == "") {
+                    $('#myFirstChildSelect').val($('option:first').val());
+                }
+                //依據第一層回傳的值去改變第二層的內容
+                result = JSON.parse(result);
+                console.log(result);
+                console.log(typeof result[0]['region']);
+                while (i < result.length) {
+                    $("#myFirstChildSelect").append("<option value='" + result[i]['region'] + "'>" + result[i]['region'] + "</option>");
+                    i++;
+                }
+                //alert('Successfully called');
 
                 },
                 error: function(xhr, status, msg) {
                     console.error(xhr);
-      console.error(msg);
-      //alert('failed called');
+                    console.error(msg);
+                    //alert('failed called');
                 }
             });
         });
     });
     </script>
-
 </body>
 </html>
