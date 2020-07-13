@@ -7,14 +7,10 @@ $(document).ready(function(){
 			console.log(data);
 			var district = [];
 			var count = [];
-			//console.log(datajson[3].playerid);
+
 			for(var i in datajson) {
-				//console.log(data);
-				//console.log("\n"+data.score);
 				district.push(datajson[i].district);
-				//console.log(data[i].playerid);
 				count.push(datajson[i].cnt);
-				//console.log("\npull element "+player+" "+score);
 			}
 
 			var chartdata = {

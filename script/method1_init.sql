@@ -74,3 +74,4 @@ highest_price VARCHAR(255) NOT NULL,
 lowest_price VARCHAR(255) NOT NULL,
 PRIMARY KEY (userid, city, district, trade_date, highest_price, lowest_price)
 );
+
