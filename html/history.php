@@ -26,6 +26,44 @@ include("config.php");
      header("location: ./search.php");
      exit;
    }
+   $j = $i + 20;
+   $temp = (string) $j;
+  if( isset( $_POST[$temp] ) ){
+   
+	  
+	  $userid = $_SESSION['userid'];
+     $sql = "SELECT city, district, trade_date, highest_price, lowest_price FROM history WHERE userid = '$userid'";
+     $result = $mysql->query($sql);
+
+     for($j = 0; $j <= $result->num_rows; $j += 1){
+       //fetch_assoc()
+        $row = $result->fetch_assoc();
+	if($j == $i){
+	$city = $row['city'];
+        $district = $row['district'];
+	
+	$trade_date = $row['trade_date'];
+	$trade_date = (int) $trade_date;
+
+	$highest_price = $row['highest_price'];
+	$highest_price = (int) $highest_price;
+	
+	$lowest_price = $row['lowest_price'];
+	$lowest_price = (int) $lowest_price;
+
+       $sql = "DELETE from  history WHERE userid = '$userid' AND city='$city' AND district='$district' AND trade_date=$trade_date AND highest_price=$highest_price AND lowest_price=$lowest_price";
+       $result = $mysql->query($sql);
+       break;
+     }
+     }
+
+    
+  }
+  
+ // else{
+ // header("location: ./search.php");
+ // }
+
  }
 ?>
 <!DOCTYPE html>
@@ -62,6 +100,7 @@ echo $_SESSION['userid'];
     <th>最高價格(highest_price)</th>
     <th>最低價格(lowest_price)</th>
     <th>連結</th>
+    <th>刪除</th>
   </tr>
   <?php
    $userid = $_SESSION['userid'];
@@ -80,6 +119,14 @@ echo $_SESSION['userid'];
      echo '<form action="./history.php" method="post">';
      echo '<input type="submit" value="前往" name="'.$i.'" />';
      echo '</form>';
+      echo '</td>';
+
+      echo '<td>';
+     $j = 20 + $i;
+     echo '<form action="./history.php" method="post">';
+     echo '<input type="submit" value="刪除" name="'.$j.'" />';
+     echo '</form>';
+     
      echo '</td>';
      echo '</tr>';
   }

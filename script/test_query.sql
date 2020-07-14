@@ -45,7 +45,7 @@ where   city = "臺中市" AND
 limit 10
 ;
 -- 4
-select district, avg(price)
+select district, avg(price) as price
 from (
         select district, price
         from trade
