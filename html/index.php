@@ -15,7 +15,7 @@ if(isset($_SESSION['userid'])){
 	echo 'Your name : ';
 	echo $_SESSION['userid'];
 	echo '<br>';
-        echo '<br> <a href="http://127.0.0.1/test_project/logout.php">logout</a>';
+        echo '<br> <a href="./logout.php">logout</a>';
 
 }
 ?>-->
@@ -29,7 +29,7 @@ if(isset($_SESSION['userid'])){
 if(isset($_SESSION['userid'])){
         echo $_SESSION['userid'];
         echo '<br>';
-        echo '<br> <a href="http://127.0.0.1/test_project/logout.php">logout</a>';
+        echo '<br> <a href="./logout.php">logout</a>';
 
 }
 ?>
