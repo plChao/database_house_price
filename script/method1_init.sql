@@ -1,14 +1,14 @@
-drop database test_project;
+drop database if exists test_project;
 create database test_project;
 ALTER DATABASE test_project CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 use test_project;
 
-CREATE TABLE IF NOT EXISTS utilizador ( 
-userid VARCHAR(255) NOT NULL, 
-email VARCHAR(255) NOT NULL, 
-password VARCHAR(255) NOT NULL, 
-PRIMARY KEY (email), 
-UNIQUE INDEX email_UNIQUE (email) 
+CREATE TABLE IF NOT EXISTS user ( 
+    userid VARCHAR(255) NOT NULL, 
+    email VARCHAR(255) NOT NULL, 
+    password VARCHAR(255) NOT NULL, 
+    PRIMARY KEY (email), 
+    UNIQUE INDEX email_UNIQUE (email) 
 );
 
 create table trade(
@@ -40,7 +40,8 @@ create table trade(
     berth_area float,
     berth_price int,
     note varchar(340),
-    trade_id char(20)
+    trade_id char(20),
+    PRIMARY KEY (trade_id)
 );
 
 
@@ -51,15 +52,18 @@ enclosed by '"'
 lines terminated by '\n'
 ignore 1 lines;
 
+create INDEX city_idx on trade (city, district);
+
 -- store the sql below to forselect table
 -- SELECT distinct city, distinct
 -- from trade;
 
 CREATE TABLE IF NOT EXISTS forselect ( 
-city VARCHAR(255) NOT NULL,
-region VARCHAR(255) NOT NULL,
+city VARCHAR(4) NOT NULL,
+region VARCHAR(6) NOT NULL,
 PRIMARY KEY (city, region)
 );
+
 INSERT INTO forselect
 SELECT distinct city, district
 from trade;

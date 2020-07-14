@@ -9,10 +9,10 @@ if (isset($_POST['register']) && !empty($_POST['userid']) && !empty($_POST['emai
     $userid=$mysql->real_escape_string($_POST['userid']);
     
     //test whether userid has been register
-    $sql = "SELECT userid FROM utilizador WHERE userid='$userid'";
+    $sql = "SELECT userid FROM user WHERE userid='$userid'";
     $test = $mysql->query($sql);
     if($test->num_rows == 0){ 
-        $sql = "insert into utilizador(userid,email,password) values ('$userid','$email','$password')";
+        $sql = "insert into user(userid,email,password) values ('$userid','$email','$password')";
         $mysql->query($sql);  
         $_SESSION['userid']=$userid;
 
@@ -29,7 +29,7 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
     $email=$mysql->real_escape_string($_POST['email']);
     $password=$mysql->real_escape_string($_POST['password']);
 
-    $login=$mysql->query("SELECT * FROM utilizador WHERE email='$email' AND password='$password'"); 
+    $login=$mysql->query("SELECT * FROM user WHERE email='$email' AND password='$password'"); 
 
     if($login->num_rows==1){
         //session_register("userid");
