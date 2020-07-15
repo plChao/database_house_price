@@ -50,7 +50,7 @@ if (isset($_POST['search'])) {
     <h3>Search page</h3>
     <div>
         <div>
-            <a href="http://127.0.0.1/test_project/index.php">回首頁</a>
+            <a href="./index.php">回首頁</a>
         </div>
         <div id="DIV1">
             <h3>Filiter</h3>
@@ -187,7 +187,7 @@ if (isset($_POST['search'])) {
                             echo "<tr><td>".$row["address"]."</td><td>".$row["trade_date"]."</td><td>".$row["price"]."</td></tr>";
                         }
                         echo "</table>";
-                    } 
+                    }
                     else {
                         echo "0 results";
                     }
