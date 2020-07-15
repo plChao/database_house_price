@@ -54,9 +54,11 @@ include("config.php");
        $sql = "DELETE from  history WHERE userid = '$userid' AND city='$city' AND district='$district' AND trade_date=$trade_date AND highest_price=$highest_price AND lowest_price=$lowest_price";
        $result = $mysql->query($sql);
        break;
-     }
-     }
+	}
 
+     }
+	header("location: ./history.php");
+     exit;
     
   }
   
